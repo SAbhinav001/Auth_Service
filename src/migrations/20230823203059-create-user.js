@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull:false,
         validate:{
-          len:[8,30]
+          len:[3,30]
         }
 
       },
