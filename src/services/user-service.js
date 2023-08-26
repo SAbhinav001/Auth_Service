@@ -42,13 +42,31 @@ class UserService{
       }
     }
 
+    async isAuthenticated(token){
+      try{
+        const response = this.verifytoken(token)
+        if(!response){
+          throw {error:"not a valid token"}
+        }
+        const user = await this.userRepository.getById(response.id)
+        if(!user){
+          throw {error: "user no longer exists"}
+        }
+        return response.id
+        
+      }catch (error) {
+        console.log("went worng in isAuthenticated fun in serivce")
+        throw error
+      }
+    }
+
      createToken(user){
        try{
         const result = jwt.sign(user, JWT_KEY , {expiresIn: '1h'});     //user--->username
         return result
 
        }catch(error){
-        console.log("wrongin creating token")
+        console.log("wrong in creating token")
         throw error
        }
     }
@@ -74,7 +92,7 @@ class UserService{
     }
 
     /**
-     * createtoken and checkpasseord use only in this lass only, so we can make it private......
+     * createtoken and checkpasseord use only in this class only, so we can make it private......
      */
 }
 
