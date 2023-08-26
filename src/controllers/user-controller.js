@@ -17,11 +17,12 @@ const create = async(req, res)=>{
 
     }catch(error){
         console.log(error);
-        return res.status(500).json({
-            message: "Internal Server Error",
-            data :{},
-            err: error,
-            success:false
+        return res.status(error.statusCode).json({
+                message: error.message,
+                success : false,
+                data:{},
+                err: error.explanation,
+
         })
     }
 }
@@ -72,8 +73,30 @@ const isAuthenticated = async(req, res)=>{
     }
 }
 
+const isAdmin = async(req, res)=>{
+    try{
+     const token = await userService.isAdmin(req.body.id)
+     return res.status(201).json({
+        success:true,
+        message:"successfully fetche wheter user is admin or not  ",
+        data:token,
+        err:{}
+    })
+     
+    }catch(error){
+        console.log(error);
+        return res.status(500).json({
+            message: "Internal Server Error",
+            data :{},
+            err: error,
+            success:false
+        })
+    }
+}
+
 module.exports = {
     create,
     signIn,
     isAuthenticated,
+    isAdmin,
 }
