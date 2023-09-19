@@ -4,13 +4,14 @@ const ValidationError = require("../utils/validation-error");
 class UserRepository {
   async create(data) {
     try {
+     
       const user = await User.create(data);
       return user;
     } catch (error) {
       if (error.name === "SequelizeValidationError") {
         throw new ValidationError(error);
       }
-      console.log("something went wrong on repo");
+      console.log("something went wrong on repo" );
       throw { error };
     }
   }
@@ -63,7 +64,7 @@ class UserRepository {
           name: "ADMIN",
         },
       });
-      return user.hasRole(adminRole);
+      return user.hasRole(adminRole);    //many to many association function medium artc...for ref
     } catch (error) {
       console.log("something went wrong on repo");
       throw { error };

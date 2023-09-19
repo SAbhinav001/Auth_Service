@@ -31,13 +31,16 @@ class UserService {
     try {
       // step1 --> fetch user detils by email
       const user = await this.userRepository.getByEmail(email);
+      if(!user){
+        throw {error: 'User not found'};
+      }
       // step2 --> compare pawword with encypted password
       const password = this.checkPassword(plainpassword, user.password);
       if (!password) {
         console.log("password not match");
         throw { error: "incoreect password" };
       }
-      //step3---> if pwd matvch thren create token
+      //step3---> if pwd matvch then create token
       const newjwt = this.createToken({ email: user.email, id: user.id });
       return newjwt;
     } catch (error) {

@@ -28,7 +28,7 @@ module.exports = {
       name: 'AIRLINE_MANAGEMENT',
       createdAt: new Date(),
       updatedAt: new Date()
-    }
+    },
     ], {});
   },
 

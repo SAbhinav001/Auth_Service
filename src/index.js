@@ -4,7 +4,7 @@ const {PORT} = require("./config/serverConfig")
 const app = express()
 const {User, Role} = require("./models")
 const apiroutes  = require("./routes/index")
-// const db = require("./models")
+const db = require("./models")
 
 const prepareAndStartServer= async()=>{
 
@@ -19,13 +19,13 @@ const prepareAndStartServer= async()=>{
     // })
     // console.log(response)
 
-    app.use('/api' , apiroutes)
+    app.use('/authservice/api' , apiroutes)
 
     app.listen(PORT,   async ()=>{
 
-        // if(process.env.DB_SYNC){
-        //         db.sequelize.sync({alter:true})
-        // }
+        if(process.env.DB_SYNC){
+                db.sequelize.sync({alter:true})
+        }
 
         // const u1 = await User.findByPk(3)
         // const r1 = await Role.findByPk(1)
